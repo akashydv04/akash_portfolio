@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Award, ExternalLink } from 'lucide-react';
+import { Award, Calendar, ExternalLink } from 'lucide-react';
 import { profileData } from '../data/profileData';
 
 const CertificationCard = ({ cert, index }) => {

@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { Github, ExternalLink, Code, Layers } from 'lucide-react';
 import { profileData } from '../data/profileData';
 
 const ProjectCard = ({ project, index }) => {

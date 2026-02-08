@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Braces, Smartphone, Layers, Award, Code2 } from 'lucide-react';
+import { Code2, Database, Layout, Smartphone, Terminal, Wrench } from 'lucide-react';
 import { profileData } from '../data/profileData';
 
 const Skills = () => {

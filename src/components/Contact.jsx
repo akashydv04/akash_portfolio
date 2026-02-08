@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Mail, Phone, ChevronRight } from 'lucide-react';
 import { profileData } from '../data/profileData';
 import config from '../config';
@@ -13,33 +12,32 @@ const ContactForm = () => {
         setLoading(true);
 
         const form = e.target;
-        const data = new FormData(form);
+        const formData = new FormData(form);
+        const data = new URLSearchParams();
+        for (const [key, value] of formData.entries()) {
+            data.append(key, value);
+        }
 
         try {
-            // Submit to our Cloudflare Worker proxy to avoid CORS/CSP issues
-            const response = await fetch('/api/submit', {
+            // Direct submission to Google Forms
+            // We use no-cors because Google Forms doesn't support CORS for direct browser fetch
+            await fetch(config.formUrl, {
                 method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 body: data
             });
 
-            const contentType = response.headers.get('content-type');
-            if (!response.ok || !contentType || !contentType.includes('application/json')) {
-                const errorText = await response.text();
-                console.error('Submission failed:', response.status, errorText);
-                throw new Error(`Submission failed: ${response.status} ${errorText.substring(0, 100)}`);
-            }
-
-            // Verify the JSON success field
-            const result = await response.json();
-            if (!result.success) {
-                throw new Error(result.error || 'Unknown error from worker');
-            }
-
-            // Since we can't verify status code in no-cors, we assume success if no network error occurred.
+            // With no-cors, we can't read the response status, so we assume success if no network error occurred
             setStatus('success');
             setLoading(false);
             const contactElement = document.getElementById('contact');
             if (contactElement) contactElement.scrollIntoView({ behavior: 'smooth' });
+            
+            // Optional: Reset form
+            form.reset();
         } catch (error) {
             console.error('Submission error:', error);
             setStatus('error');
@@ -75,6 +73,7 @@ const ContactForm = () => {
                         id="name"
                         name={config.formEntries.name}
                         placeholder="John Doe"
+                        autoComplete="name"
                         required
                     />
                 </div>
@@ -85,6 +84,7 @@ const ContactForm = () => {
                         id="email"
                         name={config.formEntries.email}
                         placeholder="john@company.com"
+                        autoComplete="email"
                         required
                     />
                 </div>
@@ -95,6 +95,7 @@ const ContactForm = () => {
                         id="company"
                         name={config.formEntries.company}
                         placeholder="Company Name"
+                        autoComplete="organization"
                     />
                 </div>
                 <div className="form-field">

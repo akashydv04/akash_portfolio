@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Award } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 import { profileData } from '../data/profileData';
 
 const Achievements = () => {

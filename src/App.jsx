@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
-
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';

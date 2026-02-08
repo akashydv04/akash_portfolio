@@ -855,6 +855,12 @@ pre {
     font-size: 1rem;
     transition: all 0.3s ease;
     appearance: none;
+    width: 100%;
+}
+
+.form-field textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 /* Autofill Fix for Dark Mode */
@@ -1083,5 +1089,9 @@ footer {
 
     .form-field.full-width {
         grid-column: span 1;
+    }
+
+    .container {
+        padding: 0 1.25rem;
     }
 }

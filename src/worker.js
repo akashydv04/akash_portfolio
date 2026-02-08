@@ -26,7 +26,7 @@ export default {
 
                 const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfBJzdViMqg5LPIXMdVmhEYPz7ffLA4nc3406nU6LT8jCuFFw/formResponse";
 
-                const response = await fetch(googleFormUrl, {
+                await fetch(googleFormUrl, {
                     method: 'POST',
                     body: body,
                     headers: {
@@ -39,8 +39,8 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-            } catch (err) {
-                return new Response(JSON.stringify({ success: false, error: err.message }), {
+            } catch (error) {
+                return new Response(JSON.stringify({ success: false, error: error.message }), {
                     status: 500,
                     headers: { 'Content-Type': 'application/json' }
                 });
