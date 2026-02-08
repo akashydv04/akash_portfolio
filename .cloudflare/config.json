@@ -1,0 +1,12 @@
+{
+    "build": {
+        "command": "npm install && npm run build",
+        "cwd": "/",
+        "environment": {
+            "NODE_VERSION": "20"
+        }
+    },
+    "deployment": {
+        "skip_build": false
+    }
+}
