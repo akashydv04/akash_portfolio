@@ -1,8 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const Navbar = ({ theme, toggleTheme }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <nav className="navbar glass-card">
             <div className="nav-content">
@@ -13,7 +15,9 @@ const Navbar = ({ theme, toggleTheme }) => {
                 >
                     AY<span>.</span>
                 </motion.span>
-                <div className="nav-links">
+
+                {/* Desktop Nav */}
+                <div className="nav-links desktop-nav">
                     {['Experience', 'Projects', 'Certifications', 'Skills'].map((item, i) => (
                         <motion.a
                             key={item}
@@ -43,7 +47,43 @@ const Navbar = ({ theme, toggleTheme }) => {
                         Connect
                     </motion.a>
                 </div>
+
+                {/* Mobile Toggle */}
+                <div className="mobile-toggle">
+                    <button onClick={toggleTheme} className="theme-toggle mobile-theme-btn">
+                        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
+                    <button onClick={() => setIsOpen(!isOpen)} className="menu-btn">
+                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        className="mobile-menu glass-card"
+                        initial={{ opacity: 0, y: -20, height: 0 }}
+                        animate={{ opacity: 1, y: 0, height: 'auto' }}
+                        exit={{ opacity: 0, y: -20, height: 0 }}
+                    >
+                        {['Experience', 'Projects', 'Certifications', 'Skills'].map((item) => (
+                            <a
+                                key={item}
+                                href={`#${item.toLowerCase()}`}
+                                onClick={() => setIsOpen(false)}
+                                className="mobile-link"
+                            >
+                                {item}
+                            </a>
+                        ))}
+                        <a href="#contact" onClick={() => setIsOpen(false)} className="mobile-cta">
+                            Connect
+                        </a>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };

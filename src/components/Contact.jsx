@@ -22,10 +22,17 @@ const ContactForm = () => {
                 body: data
             });
 
-            if (!response.ok) {
+            const contentType = response.headers.get('content-type');
+            if (!response.ok || !contentType || !contentType.includes('application/json')) {
                 const errorText = await response.text();
                 console.error('Submission failed:', response.status, errorText);
-                throw new Error(`Network response was not ok: ${response.status} ${errorText}`);
+                throw new Error(`Submission failed: ${response.status} ${errorText.substring(0, 100)}`);
+            }
+
+            // Verify the JSON success field
+            const result = await response.json();
+            if (!result.success) {
+                throw new Error(result.error || 'Unknown error from worker');
             }
 
             // Since we can't verify status code in no-cors, we assume success if no network error occurred.
