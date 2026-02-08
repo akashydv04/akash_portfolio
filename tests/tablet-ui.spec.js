@@ -36,8 +36,9 @@ test.describe('Tablet UI Tests', () => {
             window.getComputedStyle(el).gridTemplateColumns
         );
 
-        // Should have multiple columns
-        expect(gridColumns).toContain('1fr 1fr');
+        // Should have multiple columns (check if it has a space, indicating multiple values)
+        // computed style returns pixels like "372px 372px"
+        expect(gridColumns).toMatch(/\d+px \d+px/);
     });
 
     test('should toggle theme on tablet', async ({ page }) => {

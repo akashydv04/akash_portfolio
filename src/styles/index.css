@@ -426,6 +426,7 @@ pre {
     position: relative;
     width: 320px;
     height: 320px;
+    max-width: 100%;
     z-index: 2;
 }
 
@@ -1031,14 +1032,6 @@ footer {
         padding: 0;
     }
 
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-field.full-width {
-        grid-column: span 1;
-    }
-
     .submit-btn {
         width: 100%;
         justify-content: center;
@@ -1080,5 +1073,15 @@ footer {
 
     .achievements-list {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field.full-width {
+        grid-column: span 1;
     }
 }

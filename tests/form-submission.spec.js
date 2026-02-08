@@ -2,15 +2,24 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Contact Form Tests', () => {
     test('should validate form submission response', async ({ page }) => {
+        // Mock the /api/submit endpoint
+        await page.route('**/api/submit', route => {
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({ success: true })
+            });
+        });
+
         await page.goto('/');
         await page.locator('#contact').scrollIntoViewIfNeeded();
 
         // Fill out the form
-        await page.fill('input[name="name"]', 'Test User');
-        await page.fill('input[name="email"]', 'test@example.com');
-        await page.fill('input[name="company"]', 'Test Company');
-        await page.selectOption('select[name="inquiry"]', 'Full-Time Employment (Remote)');
-        await page.fill('textarea[name="message"]', 'This is a test message');
+        await page.fill('#name', 'Test User');
+        await page.fill('#email', 'test@example.com');
+        await page.fill('#company', 'Test Company');
+        await page.selectOption('#inquiry', 'Full-Time Employment (Remote)');
+        await page.fill('#message', 'This is a test message');
 
         // Listen for network request to /api/submit
         const responsePromise = page.waitForResponse(response =>
@@ -33,14 +42,23 @@ test.describe('Contact Form Tests', () => {
     });
 
     test('should display success message after valid submission', async ({ page }) => {
+        // Mock the /api/submit endpoint
+        await page.route('**/api/submit', route => {
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({ success: true })
+            });
+        });
+
         await page.goto('/');
         await page.locator('#contact').scrollIntoViewIfNeeded();
 
         // Fill form with valid data
-        await page.fill('input[name="name"]', 'Jane Doe');
-        await page.fill('input[name="email"]', 'jane@company.com');
-        await page.selectOption('select[name="inquiry"]', 'Freelance / Contract Project');
-        await page.fill('textarea[name="message"]', 'Looking for Android development help');
+        await page.fill('#name', 'Jane Doe');
+        await page.fill('#email', 'jane@company.com');
+        await page.selectOption('#inquiry', 'Freelance / Contract Project');
+        await page.fill('#message', 'Looking for Android development help');
 
         // Submit
         await page.click('button[type="submit"]');
@@ -58,7 +76,7 @@ test.describe('Contact Form Tests', () => {
         await page.click('button[type="submit"]');
 
         // Browser should show validation errors (HTML5 validation)
-        const nameInput = page.locator('input[name="name"]');
+        const nameInput = page.locator('#name');
         const isValid = await nameInput.evaluate(el => el.validity.valid);
         expect(isValid).toBe(false);
     });
@@ -85,10 +103,10 @@ test.describe('Contact Form Tests', () => {
         });
 
         // Fill and submit form
-        await page.fill('input[name="name"]', 'Test');
-        await page.fill('input[name="email"]', 'test@test.com');
-        await page.selectOption('select[name="inquiry"]', 'Android App Consultation');
-        await page.fill('textarea[name="message"]', 'Test');
+        await page.fill('#name', 'Test');
+        await page.fill('#email', 'test@test.com');
+        await page.selectOption('#inquiry', 'Android App Consultation');
+        await page.fill('#message', 'Test');
         await page.click('button[type="submit"]');
 
         // Wait a bit for error handling
