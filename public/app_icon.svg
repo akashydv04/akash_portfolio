@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="50" cy="50" r="50"/>
+    </clipPath>
+  </defs>
+  <image 
+    href="https://media.licdn.com/dms/image/v2/D5603AQGhfu-TrCvdKg/profile-displayphoto-crop_800_800/B56ZoxOSU.J8AM-/0/1761762421462?e=1772064000&v=beta&t=HSuynr4toO25orbcnoUca2O44rZiesjeS1zqS0cSeKM" 
+    width="100" 
+    height="100" 
+    clip-path="url(#circle)"/>
+</svg>
