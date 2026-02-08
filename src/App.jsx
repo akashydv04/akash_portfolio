@@ -18,6 +18,7 @@ import {
   Moon
 } from 'lucide-react';
 import { profileData } from './data/profileData';
+import config from './config';
 
 const Navbar = ({ theme, toggleTheme }) => {
   return (
@@ -247,7 +248,7 @@ const ContactForm = () => {
       // Google Forms submission requires 'no-cors' mode when called from client-side JS
       // This returns an opaque response (status 0), so we can't read the actual result text.
       // However, if the network request succeeds, the data is recorded.
-      await fetch(import.meta.env.VITE_FORM_URL, {
+      await fetch(config.formUrl, {
         method: 'POST',
         body: data,
         mode: 'no-cors'
@@ -291,7 +292,7 @@ const ContactForm = () => {
           <input
             type="text"
             id="name"
-            name={import.meta.env.VITE_NAME_ENTRY}
+            name={config.formEntries.name}
             placeholder="John Doe"
             required
           />
@@ -301,7 +302,7 @@ const ContactForm = () => {
           <input
             type="email"
             id="email"
-            name={import.meta.env.VITE_EMAIL_ENTRY}
+            name={config.formEntries.email}
             placeholder="john@company.com"
             required
           />
@@ -311,7 +312,7 @@ const ContactForm = () => {
           <input
             type="text"
             id="company"
-            name={import.meta.env.VITE_COMPANY_ENTRY}
+            name={config.formEntries.company}
             placeholder="Company Name"
           />
         </div>
@@ -335,7 +336,7 @@ const ContactForm = () => {
           <label htmlFor="message">Project Scope / Job Role</label>
           <textarea
             id="message"
-            name={import.meta.env.VITE_MESSAGE_ENTRY}
+            name={config.formEntries.message}
             placeholder="Describe your requirements or the role you are hiring for..."
             rows="5"
             required
