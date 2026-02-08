@@ -22,7 +22,11 @@ const ContactForm = () => {
                 body: data
             });
 
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Submission failed:', response.status, errorText);
+                throw new Error(`Network response was not ok: ${response.status} ${errorText}`);
+            }
 
             // Since we can't verify status code in no-cors, we assume success if no network error occurred.
             setStatus('success');
