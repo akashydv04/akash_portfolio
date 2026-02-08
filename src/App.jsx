@@ -245,14 +245,13 @@ const ContactForm = () => {
     const data = new FormData(form);
 
     try {
-      // Google Forms submission requires 'no-cors' mode when called from client-side JS
-      // This returns an opaque response (status 0), so we can't read the actual result text.
-      // However, if the network request succeeds, the data is recorded.
-      await fetch(config.formUrl, {
+      // Submit to our Cloudflare Worker proxy to avoid CORS/CSP issues
+      const response = await fetch('/api/submit', {
         method: 'POST',
-        body: data,
-        mode: 'no-cors'
+        body: data
       });
+
+      if (!response.ok) throw new Error('Network response was not ok');
 
       // Since we can't verify status code in no-cors, we assume success if no network error occurred.
       setStatus('success');
