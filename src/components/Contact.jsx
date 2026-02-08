@@ -12,25 +12,21 @@ const ContactForm = () => {
         setLoading(true);
 
         const form = e.target;
-        const formData = new FormData(form);
-        const data = new URLSearchParams();
-        for (const [key, value] of formData.entries()) {
-            data.append(key, value);
-        }
+        const data = new FormData(form);
 
         try {
-            // Direct submission to Google Forms
-            // We use no-cors because Google Forms doesn't support CORS for direct browser fetch
-            await fetch(config.formUrl, {
+            // Submit to our Worker endpoint which handles SMTP
+            const response = await fetch('/api/submit', {
                 method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
                 body: data
             });
 
-            // With no-cors, we can't read the response status, so we assume success if no network error occurred
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.error || 'Submission failed');
+            }
+
             setStatus('success');
             setLoading(false);
             const contactElement = document.getElementById('contact');

@@ -1,48 +1,90 @@
+import nodemailer from 'nodemailer';
+
 export default {
     async fetch(request, env) {
         const url = new URL(request.url);
 
-        // Handle form submission proxy
+        // Handle CORS preflight requests
+        if (request.method === "OPTIONS") {
+            return new Response(null, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                },
+            });
+        }
+
+        // Handle form submission via SMTP
         if (request.method === 'POST' && url.pathname === '/api/submit') {
             try {
                 const formData = await request.formData();
-                const body = new URLSearchParams();
+                
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const company = formData.get('company') || 'N/A';
+                const inquiry = formData.get('inquiry') || 'General';
+                const message = formData.get('message');
 
-                // Map fields to Google Form entries
-                // Note: These must match the entry IDs in config.js
-                const fieldMap = {
-                    name: "entry.1391267600",
-                    email: "entry.1651304702",
-                    company: "entry.1198720599",
-                    inquiry: "entry.2042879415",
-                    message: "entry.1417246703"
-                };
-
-                for (const [key, value] of formData.entries()) {
-                    if (fieldMap[key]) {
-                        body.append(fieldMap[key], value);
-                    }
+                // Validate required fields
+                if (!name || !email || !message) {
+                    throw new Error('Missing required fields');
                 }
 
-                const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfBJzdViMqg5LPIXMdVmhEYPz7ffLA4nc3406nU6LT8jCuFFw/formResponse";
-
-                await fetch(googleFormUrl, {
-                    method: 'POST',
-                    body: body,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                // Create transporter
+                // Note: In a real production environment, use environment variables for secrets.
+                // For this session, we use the provided credentials.
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'akashydv04@gmail.com',
+                        pass: 'lris tchi nwvd apgh'
                     }
                 });
 
-                // Google Forms returns 200 on success (or we assume success if no error thrown)
+                const mailOptions = {
+                    from: `"Portfolio Contact" <akashydv04@gmail.com>`,
+                    to: 'yadav0427@gmail.com',
+                    replyTo: email,
+                    subject: `New Portfolio Inquiry: ${inquiry}`,
+                    text: `
+Name: ${name}
+Email: ${email}
+Company: ${company}
+Inquiry Type: ${inquiry}
+
+Message:
+${message}
+                    `,
+                    html: `
+<h3>New Contact Form Submission</h3>
+<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Company:</strong> ${company}</p>
+<p><strong>Inquiry Type:</strong> ${inquiry}</p>
+<br/>
+<p><strong>Message:</strong></p>
+<p>${message.replace(/\n/g, '<br>')}</p>
+                    `
+                };
+
+                await transporter.sendMail(mailOptions);
+
                 return new Response(JSON.stringify({ success: true }), {
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
                 });
 
             } catch (error) {
+                console.error('SMTP Error:', error);
                 return new Response(JSON.stringify({ success: false, error: error.message }), {
                     status: 500,
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
                 });
             }
         }
