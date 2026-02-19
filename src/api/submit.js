@@ -44,12 +44,20 @@ export default async function handler(req, res) {
   }
   if (!name) {
     try {
-      const ua = req.headers && (req.headers['user-agent'] || req.headers['User-Agent'])
-        ? (req.headers['user-agent'] || req.headers['User-Agent'])
-        : "";
-      console.error("Validation failed: missing name. user-agent:", ua, "body:", body);
+      const ua =
+        req.headers && (req.headers["user-agent"] || req.headers["User-Agent"])
+          ? req.headers["user-agent"] || req.headers["User-Agent"]
+          : "";
+      console.error(
+        "Validation failed: missing name. user-agent:",
+        ua,
+        "body:",
+        body,
+      );
     } catch (e) {
-      console.error("Validation failed: missing name (failed to stringify body)");
+      console.error(
+        "Validation failed: missing name (failed to stringify body)",
+      );
     }
     return res.status(400).json({ error: "Missing full name" });
   }
