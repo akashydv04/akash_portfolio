@@ -15,15 +15,16 @@ const ContactForm = () => {
     setLoading(true);
 
     const form = e.target;
-    // Send raw FormData (multipart/form-data) so servers that expect FormData work directly
     const formData = new FormData(form);
+    const payload = {};
+    for (const [k, v] of formData.entries()) payload[k] = v;
 
     try {
       setErrorMessage("");
       const response = await fetch("/api/submit", {
         method: "POST",
-        // Do NOT set Content-Type — let the browser set multipart/form-data with boundary
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       const result = await response
