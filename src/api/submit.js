@@ -31,6 +31,18 @@ export default async function handler(req, res) {
 
   // Detailed validation with helpful messages
   if (!name) {
+    // Attempt to derive a name from the email if available
+    if (email && isValidEmail(email)) {
+      try {
+        const derived = email.split("@")[0].replace(/[._\-+]/g, " ");
+        name = derived.charAt(0).toUpperCase() + derived.slice(1);
+        console.info("Derived name from email:", name);
+      } catch (e) {
+        name = "";
+      }
+    }
+  }
+  if (!name) {
     try {
       const ua = req.headers && (req.headers['user-agent'] || req.headers['User-Agent'])
         ? (req.headers['user-agent'] || req.headers['User-Agent'])

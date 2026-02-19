@@ -66,7 +66,18 @@ export default {
         inquiry = (inquiry || "").toString().trim();
         message = (message || "").toString().trim();
 
-        // Validation
+        // Validation with graceful fallback: derive name from email if possible
+        if (!name) {
+          if (email && isValidEmail(email)) {
+            try {
+              const derived = email.split("@")[0].replace(/[._\-+]/g, " ");
+              name = derived.charAt(0).toUpperCase() + derived.slice(1);
+              console.info("Derived name from email:", name);
+            } catch (e) {
+              name = "";
+            }
+          }
+        }
         if (!name) {
           // Log body + request context for debugging missing name cases
           try {
