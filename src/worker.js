@@ -68,9 +68,10 @@ export default {
 
         // Validation
         if (!name) {
-          // Log body for debugging missing name cases
+          // Log body + request context for debugging missing name cases
           try {
-            console.error("Validation failed: missing name. Received body:", body);
+            const ua = request.headers.get("user-agent") || "";
+            console.error("Validation failed: missing name. user-agent:", ua, "body:", body);
           } catch (e) {
             console.error("Validation failed: missing name (failed to stringify body)");
           }
