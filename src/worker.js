@@ -101,6 +101,7 @@ ${message}
 
             return response;
         } catch (e) {
+            console.error('Asset fetch error:', e);
             return new Response("Internal Error", { status: 500 });
         }
     },

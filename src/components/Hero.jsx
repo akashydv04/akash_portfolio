@@ -1,5 +1,6 @@
 import React from 'react';
-import { Github, Linkedin, Mail, FileText, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail, FileText, ArrowRight, ChevronRight } from 'lucide-react';
 import { profileData } from '../data/profileData';
 
 const Hero = () => {

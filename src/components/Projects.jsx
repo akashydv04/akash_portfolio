@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Github, ExternalLink, Code, Layers } from 'lucide-react';
 import { profileData } from '../data/profileData';
 

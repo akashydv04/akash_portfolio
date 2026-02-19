@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Phone, ChevronRight } from 'lucide-react';
 import { profileData } from '../data/profileData';
 import config from '../config';
