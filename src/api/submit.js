@@ -21,10 +21,19 @@ export default async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const { name, email, company, inquiry, message } = extractFields(body);
+  let { name, email, company, inquiry, message } = extractFields(body);
+  // Normalize strings
+  name = (name || "").toString().trim();
+  email = (email || "").toString().trim();
+  company = (company || "").toString().trim();
+  inquiry = (inquiry || "").toString().trim();
+  message = (message || "").toString().trim();
 
   // Detailed validation with helpful messages
-  if (!name) return res.status(400).json({ error: "Missing full name" });
+  if (!name) {
+    console.error("Validation failed: missing name. Received body:", body);
+    return res.status(400).json({ error: "Missing full name" });
+  }
   if (!email) return res.status(400).json({ error: "Missing email" });
   if (!isValidEmail(email))
     return res.status(400).json({ error: "Invalid email format" });

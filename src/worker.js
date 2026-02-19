@@ -58,10 +58,22 @@ export default {
           for (const [k, v] of formData.entries()) body[k] = v;
         }
 
-        const { name, email, company, inquiry, message } = extractFields(body);
+        let { name, email, company, inquiry, message } = extractFields(body);
+        // Normalize strings
+        name = (name || "").toString().trim();
+        email = (email || "").toString().trim();
+        company = (company || "").toString().trim();
+        inquiry = (inquiry || "").toString().trim();
+        message = (message || "").toString().trim();
 
         // Validation
-        if (!name)
+        if (!name) {
+          // Log body for debugging missing name cases
+          try {
+            console.error("Validation failed: missing name. Received body:", body);
+          } catch (e) {
+            console.error("Validation failed: missing name (failed to stringify body)");
+          }
           return new Response(
             JSON.stringify({ success: false, error: "Missing full name" }),
             {
@@ -72,6 +84,7 @@ export default {
               },
             },
           );
+        }
         if (!email)
           return new Response(
             JSON.stringify({ success: false, error: "Missing email" }),
