@@ -35,6 +35,9 @@ export default defineConfig({
   ],
   build: {
     sourcemap: false, // Critical: Disable sourcemaps to prevent reverse engineering
+    // Increase chunk size warning limit to reduce noisy warnings for large UI bundles.
+    // Keep this conservative (1MB) so real oversized chunks still warn.
+    chunkSizeWarningLimit: 1000,
     minify: 'terser', // Use Terser for better minification
     terserOptions: {
       compress: {
