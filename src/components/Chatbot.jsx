@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import * as webllm from "@mlc-ai/web-llm";
 import chatbotData from '../data/chatbotKnowledge.json';
 import './Chatbot.css';
+
+// System Prompt for WebLLM and OpenAI
+const systemPrompt = `You are an AI assistant for Akash Yadav. Use ONLY the following data to answer questions. If the answer cannot be derived, respond exactly with "This information is not available in my portfolio yet." Answer in first person, friendly, concise.\n\nData: ${JSON.stringify(chatbotData)}`;
 
 // Simple keyword matching utility
 const matchKeyword = (query, keywords) => {
@@ -8,7 +12,7 @@ const matchKeyword = (query, keywords) => {
     return keywords.some(k => lower.includes(k.toLowerCase()));
 };
 
-const getResponse = async (query) => {
+const getOpenAIResponse = async (query) => {
     // Sanitize input to prevent injection
     const sanitized = query.replace(/[^a-zA-Z0-9 .,!?@\\-_/]/g, '').trim();
     if (!sanitized) return 'Please ask a question.';
@@ -54,7 +58,7 @@ const getResponse = async (query) => {
         return `Key achievements:\n${ach}`;
     }
 
-    // Fallback to OpenAI for any other question
+    // Fallback to OpenAI for any other question if WebLLM is not ready or fails
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -65,9 +69,8 @@ const getResponse = async (query) => {
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages: [
-                    { role: 'system', content: `You are an AI assistant for Akash Yadav. Use ONLY the following data to answer questions. If the answer cannot be derived, respond with: "This information is not available in my portfolio yet." Answer in first person, friendly, concise.` },
-                    { role: 'user', content: sanitized },
-                    { role: 'assistant', content: JSON.stringify(chatbotData) },
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: sanitized }
                 ],
                 temperature: 0,
                 max_tokens: 300,
@@ -84,17 +87,49 @@ const getResponse = async (query) => {
     }
 };
 
+let webLLMEngine = null;
+
 const Chatbot = () => {
     const [open, setOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [webLLMStatus, setWebLLMStatus] = useState(''); // Loading status for WebLLM
     const lastSentRef = useRef(0);
     const messagesEndRef = useRef(null);
 
+    // Initialize WebLLM when chatbot is opened for the first time
+    useEffect(() => {
+        const initWebLLM = async () => {
+            if (open && !webLLMEngine) {
+                try {
+                    // Small local model suitable for simple Q&A based on system prompt.
+                    // Llama-3-8B-Instruct-q4f32_1-MLC is the standard recommended lightweight. 
+                    // To keep download size small, Llama-3-8B-Instruct is used initially. 
+                    // However, considering browser constraints, Phi-3 can also be very fast.
+                    const selectedModel = "Llama-3-8B-Instruct-q4f16_1-MLC";
+
+                    setWebLLMStatus("Loading local AI engine (this happens once)...");
+                    webLLMEngine = new webllm.MLCEngine();
+                    webLLMEngine.setInitProgressCallback((report) => {
+                        setWebLLMStatus(report.text);
+                    });
+
+                    await webLLMEngine.reload(selectedModel);
+                    setWebLLMStatus(''); // clear status when done
+                } catch (error) {
+                    console.error("WebLLM initialization failed:", error);
+                    setWebLLMStatus('');
+                    webLLMEngine = null; // Mark as failed to fallback
+                }
+            }
+        };
+        initWebLLM();
+    }, [open]);
+
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, webLLMStatus]);
 
     const handleSend = async () => {
         if (!input.trim()) return;
@@ -117,14 +152,42 @@ const Chatbot = () => {
             return;
         }
 
-        // Get response from AI (may be async)
-        const responseText = await getResponse(userMsg.text);
+        let responseText = '';
 
-        const isFallback = responseText === 'This information is not available in my portfolio yet.' ||
+        try {
+            // First check if WebLLM is loaded and ready
+            if (webLLMEngine) {
+                const request = {
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        ...messages.map(m => ({ role: m.sender === 'bot' ? 'assistant' : 'user', content: m.text })),
+                        { role: 'user', content: userMsg.text }
+                    ],
+                    temperature: 0.1, // Keep it deterministic
+                    max_tokens: 300,
+                };
+                const reply = await webLLMEngine.chat.completions.create(request);
+                responseText = reply.choices[0].message.content.trim();
+            } else {
+                // Throw to use fallback
+                throw new Error("WebLLM not ready");
+            }
+        } catch (e) {
+            console.log("WebLLM failed or not ready, falling back to OpenAI/Local Rules", e);
+            // WebLLM failed / not loaded, fallback to Local Rules -> OpenAI
+            responseText = await getOpenAIResponse(userMsg.text);
+        }
+
+        const isFallback =
+            responseText === 'This information is not available in my portfolio yet.' ||
             responseText === 'Sorry, there was an error processing your request.';
 
         if (!isFallback) {
             const botReply = { sender: 'bot', text: responseText };
+            setMessages(prev => [...prev, botReply]);
+        } else {
+            // Show a sensible fallback response to the user while Tidio connects in the background
+            const botReply = { sender: 'bot', text: "I couldn't find an exact answer to that in my portfolio data, but let me check that directly with Akash for you..." };
             setMessages(prev => [...prev, botReply]);
         }
 
@@ -190,6 +253,7 @@ const Chatbot = () => {
                             <div key={idx} className={`chat-message ${msg.sender}`}> {msg.text} </div>
                         ))}
                         {loading && <div className="chat-message bot">Thinking...</div>}
+                        {webLLMStatus && <div className="chat-message bot" style={{ fontSize: '0.8rem', fontStyle: 'italic' }}>{webLLMStatus}</div>}
                         <div ref={messagesEndRef} />
                     </div>
                     <div className="chatbot-input">
