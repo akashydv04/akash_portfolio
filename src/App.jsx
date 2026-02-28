@@ -9,6 +9,7 @@ import Skills from './components/Skills';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [theme, setTheme] = useState('dark');
@@ -62,6 +63,7 @@ function App() {
       </main>
 
       <Footer />
+      <Chatbot />
     </div>
   );
 }

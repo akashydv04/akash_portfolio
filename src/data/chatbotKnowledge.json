@@ -1,0 +1,170 @@
+{
+    "name": "Akash Yadav",
+    "title": "Senior Android Developer",
+    "summary": "Android Developer with 5+ years of experience building high-performance mobile applications using Java, Kotlin, and Flutter. Proven track record in fintech and digital payment solutions. Expertise in creating scalable, user-centric applications with clean architecture. Strong background in cross-platform development and backend integration with Spring Boot.",
+    "contact": {
+        "phone": "+91 8295018966",
+        "email": "akashydv04@gmail.com",
+        "linkedin": "https://linkedin.com/in/akashydv04",
+        "github": "https://github.com/akashydv04"
+    },
+    "skills": {
+        "Languages": [
+            "Kotlin",
+            "Java",
+            "Dart",
+            "C",
+            "SQL"
+        ],
+        "Mobile Development": [
+            "Android SDK",
+            "Flutter",
+            "Jetpack Compose",
+            "XML Layouts",
+            "MVVM",
+            "MVP",
+            "Clean Architecture"
+        ],
+        "Backend & Tools": [
+            "Spring Boot",
+            "Firebase",
+            "Cloud Firestore",
+            "REST APIs",
+            "Git",
+            "Gradle",
+            "ProGuard",
+            "R8"
+        ],
+        "Specializations": [
+            "Fintech Applications",
+            "Digital Payment Systems",
+            "Code Obfuscation",
+            "Deep Linking",
+            "Figma to UI"
+        ]
+    },
+    "experience": [
+        {
+            "company": "Mintoak",
+            "role": "Software Engineer (Remote)",
+            "period": "Sept 2022 – Present",
+            "highlights": [
+                "Developed and maintained scalable Android applications for digital payment solutions, serving thousands of merchants and processing high-volume transactions",
+                "Led a team of 3 developers in building robust fintech features including payment gateway integration and real-time processing with 99.9% uptime",
+                "Implemented code obfuscation using ProGuard and R8 to secure sensitive financial data and prevent reverse engineering",
+                "Designed and implemented deep linking architecture for seamless navigation from marketing campaigns and payment requests",
+                "Spearheaded Java to Kotlin migration project, reducing codebase by 25% while mentoring team on Kotlin best practices",
+                "Translated Figma wireframes into production-ready UI using Jetpack Compose and XML layouts",
+                "Optimized app performance reducing crash rates by 40% and improving launch time by 35%"
+            ]
+        },
+        {
+            "company": "Swipe (YC S21)",
+            "role": "Android Developer",
+            "period": "Nov 2021 – Sept 2022",
+            "highlights": [
+                "Developed key features for a YC-backed fintech startup's Android application, contributing to product-market fit",
+                "Led development of invoice management and GST billing features used by 10,000+ small businesses across India",
+                "Implemented deep linking for invoice sharing and payment collection, increasing conversion rates by 25%",
+                "Converted Figma designs into responsive XML layouts and Jetpack Compose UI components",
+                "Implemented real-time data synchronization using Cloud Firestore for seamless offline-first experience"
+            ]
+        },
+        {
+            "company": "Truelancer.com",
+            "role": "Android Developer",
+            "period": "Feb 2021 – Oct 2021",
+            "highlights": [
+                "Developed and maintained Android application features for a freelancing platform connecting clients with professionals",
+                "Implemented user authentication, profile management, and real-time chat functionality",
+                "Enhanced app UI/UX based on user feedback, increasing user retention by 20%",
+                "Utilized Flutter for cross-platform development, reducing development time by 40%"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "title": "HDFC Bank SmartHub Vyapar",
+            "tech": [
+                "Kotlin",
+                "MVVM",
+                "Firebase",
+                "Payment Gateway"
+            ],
+            "description": "Enterprise-grade digital payment application for HDFC Bank merchants with 100K+ downloads on Play Store.",
+            "highlights": [
+                "Implemented secure payment processing with code obfuscation",
+                "Built deep linking flows for payment requests and notifications",
+                "Modern merchant dashboard in Jetpack Compose"
+            ],
+            "link": "https://play.google.com/store/apps/details?id=com.hdfc.smarthub&hl=en_IN"
+        },
+        {
+            "title": "neo for merchants (Axis Bank)",
+            "tech": [
+                "Kotlin",
+                "Jetpack Compose",
+                "RESTful APIs"
+            ],
+            "description": "Merchant payment solution for Axis Bank with real-time transaction processing and analytics.",
+            "highlights": [
+                "QR code payments and settlement tracking",
+                "Business analytics dashboard",
+                "Optimized for low-end device performance"
+            ],
+            "link": "https://play.google.com/store/apps/details?id=com.neo.axis&hl=en_IN"
+        },
+        {
+            "title": "Invoicing Billing GST - Swipe",
+            "tech": [
+                "Kotlin",
+                "Cloud Firestore",
+                "Material Design"
+            ],
+            "description": "Invoice and GST billing application serving 10,000+ small businesses across India.",
+            "highlights": [
+                "Offline-first architecture with real-time sync",
+                "Custom PDF generation engine for GST compliant invoices"
+            ],
+            "link": "https://play.google.com/store/apps/details?id=in.swipe.app&hl=en_IN"
+        }
+    ],
+    "certifications": [
+        {
+            "title": "Flutter Development",
+            "issuer": "TudeDude",
+            "link": "https://upskill.tutedude.com/certificate/TD-AKAS-FL-2119"
+        },
+        {
+            "title": "Android Advance Professional",
+            "issuer": "Cutshort",
+            "link": "https://cutshort.io/certificate/33372"
+        },
+        {
+            "title": "AI Tool Workshop",
+            "issuer": "CertX",
+            "link": "https://certx.in/certificate/0270772f-3809-4400-b29b-1e1c61cd0997751552"
+        },
+        {
+            "title": "Kotlin Programming",
+            "issuer": "SoloLearn",
+            "link": "https://www.sololearn.com/Certificate/CT-HIKK6CRT/png"
+        },
+        {
+            "title": "Android App Development with Kotlin",
+            "issuer": "Udemy",
+            "link": "https://www.udemy.com/certificate/UC-26bb2425-25ed-4af9-8bcf-9577b7be2b18/"
+        },
+        {
+            "title": "Android Development Masterclass",
+            "issuer": "Udemy",
+            "link": "https://www.udemy.com/certificate/UC-739b51a7-5bee-4b19-b07c-6aa9bd18ae23/"
+        }
+    ],
+    "achievements": [
+        "Successfully delivered 10+ production applications across fintech and e-commerce",
+        "Mentored 3 junior developers in Android development and Kotlin migration",
+        "Consistently recognized for code quality, meeting 95% of sprint commitments",
+        "Delivered an international banking application in a record timeline of 3 months, receiving founder recognition and a formal certificate for record-time delivery"
+    ]
+}
