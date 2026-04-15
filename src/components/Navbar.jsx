@@ -21,7 +21,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                     {['Experience', 'Projects', 'Certifications', 'Skills'].map((item, i) => (
                         <motion.a
                             key={item}
-                            href={`#${item.toLowerCase()}`}
+                            href={`${item.toLowerCase()}`}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
@@ -38,7 +38,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                         {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                     </motion.button>
                     <motion.a
-                        href="#contact"
+                        href="contact"
                         className="nav-cta"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -71,14 +71,14 @@ const Navbar = ({ theme, toggleTheme }) => {
                         {['Experience', 'Projects', 'Certifications', 'Skills'].map((item) => (
                             <a
                                 key={item}
-                                href={`#${item.toLowerCase()}`}
+                                href={`${item.toLowerCase()}`}
                                 onClick={() => setIsOpen(false)}
                                 className="mobile-link"
                             >
                                 {item}
                             </a>
                         ))}
-                        <a href="#contact" onClick={() => setIsOpen(false)} className="mobile-cta">
+                        <a href="contact" onClick={() => setIsOpen(false)} className="mobile-cta">
                             Connect
                         </a>
                     </motion.div>
