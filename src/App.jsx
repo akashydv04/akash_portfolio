@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -10,9 +11,23 @@ import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import { profileData } from './data/profileData';
 
 function App() {
   const [theme, setTheme] = useState('dark');
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": profileData.name,
+    "jobTitle": "Senior Android Developer",
+    "url": "https://akashyadav.dev",
+    "sameAs": [
+      profileData.contact.linkedin,
+      profileData.contact.github
+    ],
+    "knowsAbout": ["Kotlin", "Jetpack Compose", "KMP", "Flutter", "Fintech"]
+  };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -51,6 +66,14 @@ function App() {
 
   return (
     <div className="app">
+      <Helmet>
+        <title>{profileData.name} | Senior Android Developer</title>
+        <meta name="description" content={`Portfolio of ${profileData.name}, a Senior Android Developer specializing in Kotlin, Jetpack Compose, KMP, and Fintech solutions.`} />
+        <meta name="keywords" content="Android Developer, Kotlin, Jetpack Compose, KMP, Flutter, Fintech, Mobile App Development" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       <motion.div className="progress-bar" style={{ scaleX }} />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
