@@ -86,7 +86,7 @@ test.describe('Mobile UI Tests', () => {
         await page.goto('/');
 
         // Check all major sections exist and are visible
-        const sections = ['#experience', '#projects', '#certifications', '#skills', '#contact'];
+        const sections = ['experience', 'projects', 'certifications', 'skills', 'contact'];
 
         for (const selector of sections) {
             await page.locator(selector).scrollIntoViewIfNeeded();

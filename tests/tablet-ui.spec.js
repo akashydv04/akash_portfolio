@@ -59,7 +59,7 @@ test.describe('Tablet UI Tests', () => {
 
     test('should display project cards in responsive grid', async ({ page }) => {
         await page.goto('/');
-        await page.locator('#projects').scrollIntoViewIfNeeded();
+        await page.locator('projects').scrollIntoViewIfNeeded();
 
         // Check project cards are visible
         const projectCards = page.locator('.project-card');
