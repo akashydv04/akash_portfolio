@@ -4,6 +4,15 @@ import { Github, Linkedin, Mail, FileText, ArrowRight, ChevronRight } from 'luci
 import { profileData } from '../data/profileData';
 
 const Hero = () => {
+    const handleNavClick = (e, targetId) => {
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState(null, '', `/${targetId}`);
+        }
+    };
+
     return (
         <section className="hero-section container">
             <div className="hero-content">
@@ -40,7 +49,11 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                 >
-                    <a href="contact" className="btn btn-primary">
+                    <a
+                        href="/contact"
+                        onClick={(e) => handleNavClick(e, 'contact')}
+                        className="btn btn-primary"
+                    >
                         Hire Me <ChevronRight size={18} />
                     </a>
                     <div className="social-links">

@@ -5,6 +5,16 @@ import { Menu, X, Sun, Moon, Github, Linkedin, Mail } from 'lucide-react';
 const Navbar = ({ theme, toggleTheme }) => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const handleNavClick = (e, targetId) => {
+        e.preventDefault();
+        const element = document.getElementById(targetId.toLowerCase());
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState(null, '', `/${targetId.toLowerCase()}`);
+            setIsOpen(false);
+        }
+    };
+
     return (
         <nav className="navbar glass-card">
             <div className="nav-content">
@@ -12,6 +22,11 @@ const Navbar = ({ theme, toggleTheme }) => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="nav-logo"
+                    onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        window.history.pushState(null, '', '/');
+                    }}
+                    style={{ cursor: 'pointer' }}
                 >
                     AY<span>.</span>
                 </motion.span>
@@ -21,7 +36,8 @@ const Navbar = ({ theme, toggleTheme }) => {
                     {['Experience', 'Projects', 'Certifications', 'Skills'].map((item, i) => (
                         <motion.a
                             key={item}
-                            href={`${item.toLowerCase()}`}
+                            href={`/${item.toLowerCase()}`}
+                            onClick={(e) => handleNavClick(e, item)}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
@@ -38,7 +54,8 @@ const Navbar = ({ theme, toggleTheme }) => {
                         {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                     </motion.button>
                     <motion.a
-                        href="contact"
+                        href="/contact"
+                        onClick={(e) => handleNavClick(e, 'contact')}
                         className="nav-cta"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -71,14 +88,18 @@ const Navbar = ({ theme, toggleTheme }) => {
                         {['Experience', 'Projects', 'Certifications', 'Skills'].map((item) => (
                             <a
                                 key={item}
-                                href={`${item.toLowerCase()}`}
-                                onClick={() => setIsOpen(false)}
+                                href={`/${item.toLowerCase()}`}
+                                onClick={(e) => handleNavClick(e, item)}
                                 className="mobile-link"
                             >
                                 {item}
                             </a>
                         ))}
-                        <a href="contact" onClick={() => setIsOpen(false)} className="mobile-cta">
+                        <a
+                            href="/contact"
+                            onClick={(e) => handleNavClick(e, 'contact')}
+                            className="mobile-cta"
+                        >
                             Connect
                         </a>
                     </motion.div>
