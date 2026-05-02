@@ -2,7 +2,7 @@ export const profileData = {
     name: "Akash Yadav",
     title: "Senior Android Developer",
     location: "Gurugram, Haryana, India",
-    avatar: "https://media.licdn.com/dms/image/v2/D5603AQGhfu-TrCvdKg/profile-displayphoto-crop_800_800/B56ZoxOSU.J8AM-/0/1761762421462?e=1773878400&v=beta&t=KFHFgDFY7zGsGiq_goWIlhYmtNnHp38E-syakXXudgk",
+    avatar: "https://github.com/akashydv04/akash_portfolio/blob/main/public/favicon.png?raw=true",
     contact: {
         phone: "+91 8295018966",
         email: "akashydv04@gmail.com",
