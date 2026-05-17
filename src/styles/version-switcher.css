@@ -1,0 +1,134 @@
+/* ── Version Switcher — floats top-right, works in both modes ── */
+.version-switcher {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .5rem;
+}
+
+/* Main pill */
+.vs-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .45rem 1rem;
+  border-radius: 100px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  cursor: pointer;
+  border: none;
+  transition: all .25s;
+  font-family: 'JetBrains Mono', 'Outfit', sans-serif;
+}
+.vs-pill-holo {
+  background: rgba(0, 245, 255, 0.1);
+  color: #00f5ff;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  box-shadow: 0 0 14px rgba(0, 245, 255, 0.2);
+}
+.vs-pill-holo:hover {
+  background: rgba(0, 245, 255, 0.18);
+  box-shadow: 0 0 24px rgba(0, 245, 255, 0.4);
+}
+.vs-pill-classic {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+.vs-pill-classic:hover {
+  background: rgba(59, 130, 246, 0.18);
+}
+.vs-arrow {
+  font-size: .6rem;
+  opacity: .7;
+}
+
+/* Dropdown */
+.vs-dropdown {
+  background: rgba(4, 12, 24, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  border-radius: 12px;
+  padding: .8rem;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 245, 255, 0.1);
+}
+.vs-label {
+  font-size: .62rem;
+  letter-spacing: .14em;
+  color: rgba(0, 245, 255, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  padding: 0 .5rem .6rem;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.08);
+  margin-bottom: .5rem;
+  text-transform: uppercase;
+}
+
+/* Option buttons */
+.vs-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .65rem .75rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .2s;
+  text-align: left;
+  margin-bottom: .3rem;
+}
+.vs-option:last-child { margin-bottom: 0; }
+.vs-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2f0ff;
+}
+.vs-option.vs-active {
+  background: rgba(59, 130, 246, 0.1);
+  color: #e2f0ff;
+}
+.vs-option-holo.vs-active {
+  background: rgba(0, 245, 255, 0.08);
+  color: #00f5ff;
+}
+.vs-option-holo:hover {
+  background: rgba(0, 245, 255, 0.06);
+  color: #00f5ff;
+}
+.vs-opt-text {
+  display: flex;
+  flex-direction: column;
+  gap: .18rem;
+  flex: 1;
+}
+.vs-opt-name {
+  font-size: .8rem;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+}
+.vs-opt-desc {
+  font-size: .67rem;
+  opacity: .6;
+  font-family: 'JetBrains Mono', monospace;
+}
+.vs-check {
+  font-size: .8rem;
+  color: #00f5ff;
+  flex-shrink: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .version-switcher { top: .8rem; right: .8rem; }
+  .vs-dropdown { min-width: 185px; }
+}

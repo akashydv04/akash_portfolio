@@ -41,7 +41,10 @@ const ProjectCard = ({ project, index }) => {
 const Projects = () => {
     return (
         <section id="projects" className="container section">
-            <h2 className="section-title">Featured <span>Work</span></h2>
+            <h2 className="section-title">Featured <span>Projects</span></h2>
+            <p className="section-subtitle" style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', marginTop: '-2rem' }}>
+                High-performance applications built for global users.
+            </p>
             <div className="projects-grid">
                 {profileData.projects.map((project, i) => (
                     <ProjectCard key={i} project={project} index={i} />

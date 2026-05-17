@@ -30,8 +30,8 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                 >
-                    Building <span className="gradient-text">Scalable</span> <br />
-                    Mobile Experiences
+                    Android Developer building <span className="gradient-text">scalable</span>, <br />
+                    high-performance mobile experiences
                 </motion.h1>
 
                 <motion.p
@@ -40,7 +40,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                 >
-                    {profileData.summary}
+                    Specializing in Kotlin and Jetpack Compose to create fluid, native Android applications that push the boundaries of performance and design.
                 </motion.p>
 
                 <motion.div
@@ -57,9 +57,9 @@ const Hero = () => {
                         Hire Me <ChevronRight size={18} />
                     </a>
                     <div className="social-links">
-                        <a href={profileData.contact.github}><Github /></a>
-                        <a href={profileData.contact.linkedin}><Linkedin /></a>
-                        <a href={`mailto:${profileData.contact.email}`}><Mail /></a>
+                        <a href={profileData.contact.github} aria-label="GitHub"><Github /></a>
+                        <a href={profileData.contact.linkedin} aria-label="LinkedIn"><Linkedin /></a>
+                        <a href={`mailto:${profileData.contact.email}`} aria-label="Email"><Mail /></a>
                     </div>
                 </motion.div>
             </div>

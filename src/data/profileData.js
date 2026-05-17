@@ -1,6 +1,6 @@
 export const profileData = {
     name: "Akash Yadav",
-    title: "Senior Android Developer",
+    title: "Senior Software Engineer",
     location: "Gurugram, Haryana, India",
     avatar: "https://github.com/akashydv04/akash_portfolio/blob/main/public/favicon.png?raw=true",
     contact: {
@@ -19,8 +19,21 @@ export const profileData = {
     experience: [
         {
             company: "Mintoak",
+            role: "Senior Software Engineer (Remote)",
+            period: "Apr 2026 – Present",
+            location: "Gurugram, Haryana",
+            highlights: [
+                "Promoted to Senior Software Engineer in recognition of consistent high-impact delivery and technical leadership across multiple fintech products",
+                "Driving architectural decisions for next-generation merchant payment platforms, defining coding standards and system design patterns",
+                "Leading cross-functional initiatives to migrate legacy payment flows to Jetpack Compose, improving UI delivery speed by 40%",
+                "Mentoring a team of junior and mid-level engineers, conducting code reviews, and establishing engineering best practices",
+                "Collaborating directly with product and design teams to shape roadmaps and translate business requirements into scalable Android solutions"
+            ]
+        },
+        {
+            company: "Mintoak",
             role: "Software Engineer (Remote)",
-            period: "Sept 2022 – Present",
+            period: "Sept 2022 – Mar 2026",
             location: "Gurugram, Haryana",
             highlights: [
                 "Developed and maintained scalable Android applications for digital payment solutions, serving thousands of merchants and processing high-volume transactions",

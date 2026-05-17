@@ -13,7 +13,10 @@ const Skills = () => {
 
     return (
         <section id="skills" className="skills-section container">
-            <h2 className="section-title">Technical <span>Stack</span></h2>
+            <h2 className="section-title">Technical <span>Expertise</span></h2>
+            <p className="section-subtitle" style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', marginTop: '-2rem' }}>
+                Categorized stack for modern mobile engineering.
+            </p>
             <div className="skills-grid">
                 {profileData.skills.map((skill, i) => (
                     <motion.div

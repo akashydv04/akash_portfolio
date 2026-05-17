@@ -35,6 +35,9 @@ const Experience = () => {
     return (
         <section id="experience" className="container section">
             <h2 className="section-title">Professional <span>Journey</span></h2>
+            <p className="section-subtitle" style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', marginTop: '-2rem' }}>
+                Evolution of technical mastery over the years.
+            </p>
             <div className="experience-list">
                 {profileData.experience.map((exp, i) => (
                     <ExperienceCard key={i} exp={exp} index={i} />

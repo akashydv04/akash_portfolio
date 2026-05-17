@@ -189,11 +189,10 @@ const Contact = () => {
       <div className="contact-wrapper">
         <div className="contact-text">
           <h2 className="section-title">
-            Get In <span>Touch</span>
+            Let's build something <span>extraordinary</span>.
           </h2>
           <p className="contact-subtitle">
-            I'm always open to discussing new projects, creative ideas or
-            opportunities.
+            Available for consulting, full-time roles, or technical collaborations on groundbreaking mobile projects.
           </p>
         </div>
 

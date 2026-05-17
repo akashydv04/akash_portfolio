@@ -33,11 +33,11 @@ const Navbar = ({ theme, toggleTheme }) => {
 
                 {/* Desktop Nav */}
                 <div className="nav-links desktop-nav">
-                    {['Experience', 'Projects', 'Certifications', 'Skills'].map((item, i) => (
+                    {['Projects', 'Skills', 'Timeline'].map((item, i) => (
                         <motion.a
                             key={item}
                             href={`/${item.toLowerCase()}`}
-                            onClick={(e) => handleNavClick(e, item)}
+                            onClick={(e) => handleNavClick(e, item === 'Timeline' ? 'experience' : item)}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
@@ -61,7 +61,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 }}
                     >
-                        Connect
+                        Contact
                     </motion.a>
                 </div>
 
@@ -85,11 +85,11 @@ const Navbar = ({ theme, toggleTheme }) => {
                         animate={{ opacity: 1, y: 0, height: 'auto' }}
                         exit={{ opacity: 0, y: -20, height: 0 }}
                     >
-                        {['Experience', 'Projects', 'Certifications', 'Skills'].map((item) => (
+                        {['Projects', 'Skills', 'Timeline'].map((item) => (
                             <a
                                 key={item}
                                 href={`/${item.toLowerCase()}`}
-                                onClick={(e) => handleNavClick(e, item)}
+                                onClick={(e) => handleNavClick(e, item === 'Timeline' ? 'experience' : item)}
                                 className="mobile-link"
                             >
                                 {item}
@@ -100,7 +100,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                             onClick={(e) => handleNavClick(e, 'contact')}
                             className="mobile-cta"
                         >
-                            Connect
+                            Contact
                         </a>
                     </motion.div>
                 )}
