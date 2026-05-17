@@ -132,3 +132,146 @@
   .version-switcher { top: .8rem; right: .8rem; }
   .vs-dropdown { min-width: 185px; }
 }
+
+/* ── Cyber Warp Curtain ── */
+.warp-curtain {
+  position: fixed;
+  inset: 0;
+  background: #020712;
+  z-index: 9999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  color: #00f5ff;
+}
+
+/* Scanline grid overlay */
+.warp-curtain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  animation: grid-flicker 4s infinite linear;
+}
+
+.warp-curtain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+.warp-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Cybernetic circular loader */
+.cyber-loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cyber-ring-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(0, 245, 255, 0.25);
+  border-top-color: #00f5ff;
+  border-bottom-color: #00f5ff;
+  border-radius: 50%;
+  animation: spin-clockwise 2.5s infinite linear;
+}
+
+.cyber-ring-inner {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  border: 1px dotted rgba(168, 85, 247, 0.3);
+  border-left-color: #a855f7;
+  border-right-color: #a855f7;
+  border-radius: 50%;
+  animation: spin-counter-clockwise 1.5s infinite linear;
+}
+
+.cyber-glitch-logo {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #00f5ff;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
+  animation: text-glow 1.5s infinite alternate;
+}
+
+/* Terminal Log Sequence Box */
+.warp-terminal {
+  background: rgba(3, 10, 20, 0.85);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  border-radius: 8px;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 460px;
+  min-height: 150px;
+  text-align: left;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 245, 255, 0.05);
+}
+
+.warp-log-line {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  text-shadow: 0 0 4px rgba(0, 245, 255, 0.3);
+  animation: log-fade-in 0.2s ease-out forwards;
+}
+
+.warp-log-line.system {
+  color: #a855f7;
+  text-shadow: 0 0 4px rgba(168, 85, 247, 0.3);
+}
+
+/* Keyframes */
+@keyframes spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-counter-clockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes text-glow {
+  from { text-shadow: 0 0 6px rgba(0, 245, 255, 0.4); }
+  to { text-shadow: 0 0 16px rgba(0, 245, 255, 0.8), 0 0 2px #fff; }
+}
+
+@keyframes grid-flicker {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+
+@keyframes log-fade-in {
+  from { transform: translateY(4px); opacity: 0; }
+  to { transform: translateY(0); opacity: 0.9; }
+}
+

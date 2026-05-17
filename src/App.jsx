@@ -170,21 +170,71 @@ const HoloApp = ({ version, onSwitch }) => {
 //  ROOT — version gate
 // ══════════════════════════════════════════════════════════════
 function App() {
-  const [version, setVersion] = useState(() => localStorage.getItem(LS_KEY) || 'holo');
+  const [version, setVersion] = useState(() => {
+    try {
+      return localStorage.getItem(LS_KEY) || 'holo';
+    } catch (e) {
+      return 'holo';
+    }
+  });
+  const [isWarping, setIsWarping] = useState(false);
+  const [warpTarget, setWarpTarget] = useState(null);
+  const [terminalLogs, setTerminalLogs] = useState([]);
 
   const handleSwitch = (v) => {
-    localStorage.setItem(LS_KEY, v);
-    setVersion(v);
-    // Reset scroll on switch
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.history.pushState(null, '', '/');
+    if (v === version || isWarping) return;
+    
+    setIsWarping(true);
+    setWarpTarget(v);
+
+    const logs = v === 'holo'
+      ? [
+          '>> DETECTING NEURAL COMM LINK...',
+          '>> ALLOCATING WebGL CANVAS GRID CONTEXT...',
+          '>> SYNCHRONIZING SPACE PHYSICS PARTICLE ENGINE...',
+          '>> ESTABLISHING 3D SPACIAL CAMERA MATRIX...',
+          '>> HOLOGRAPHIC COMM BRIDGE SECURED.'
+        ]
+      : [
+          '>> DE-CONFIGURING HOLOGRAPHIC SPACIAL CORRIDOR...',
+          '>> RELEASING SYSTEM GPU SHADER RESOURCE BUFFERS...',
+          '>> RESTORING CLASSIC INTERACTION HANDLERS...',
+          '>> INSTANTIATING SECURE HYBRID ARCHACTIVE LAYER...',
+          '>> SYSTEM ONLINE: CLASSIC MODE ACTIVE.'
+        ];
+
+    setTerminalLogs([]);
+    
+    // Animate the log text printing line-by-line
+    logs.forEach((log, index) => {
+      setTimeout(() => {
+        setTerminalLogs(prev => [...prev, log]);
+      }, index * 220);
+    });
+
+    // In the middle of the transition, do the hard switch & scroll reset
+    setTimeout(() => {
+      try {
+        localStorage.setItem(LS_KEY, v);
+      } catch (e) {}
+      
+      // Critical fix: Instant scroll reset hides layout snaps completely
+      window.scrollTo(0, 0);
+      setVersion(v);
+      window.history.pushState(null, '', '/');
+    }, 600);
+
+    // Fade out curtain after assets compile behind it
+    setTimeout(() => {
+      setIsWarping(false);
+    }, 2000);
   };
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": profileData.name,
-    "jobTitle": "Senior Android Developer",
+    "jobTitle": "Senior Software Engineer",
     "url": "https://akashyadav.dev",
     "sameAs": [profileData.contact.linkedin, profileData.contact.github],
     "knowsAbout": ["Kotlin","Jetpack Compose","KMP","Flutter","Fintech"],
@@ -199,6 +249,37 @@ function App() {
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
+      {/* Cyber Warp Loading Curtain */}
+      <AnimatePresence>
+        {isWarping && (
+          <motion.div
+            className="warp-curtain"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+          >
+            <div className="warp-content">
+              <div className="cyber-loader">
+                <div className="cyber-ring-outer" />
+                <div className="cyber-ring-inner" />
+                <span className="cyber-glitch-logo">AY</span>
+              </div>
+              <div className="warp-terminal">
+                {terminalLogs.map((log, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`warp-log-line ${idx === terminalLogs.length - 1 ? 'system' : ''}`}
+                  >
+                    {log}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence mode="wait">
         {version === 'holo' ? (
           <motion.div
@@ -206,7 +287,7 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
             <HoloApp version={version} onSwitch={handleSwitch} />
           </motion.div>
@@ -216,7 +297,7 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
             <ClassicApp version={version} onSwitch={handleSwitch} />
           </motion.div>
