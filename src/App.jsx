@@ -17,8 +17,7 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 
 // ── Holo components ─────────────────────────────────────────
-import { Suspense, lazy } from 'react';
-const SpaceCanvas  = lazy(() => import('./components/canvas/SpaceCanvas'));
+import SpaceCanvas from './components/canvas/SpaceCanvas';
 import HoloHero     from './components/HoloHero';
 import HoloProjects from './components/HoloProjects';
 import HoloExperience from './components/HoloExperience';
@@ -149,9 +148,7 @@ const HoloApp = ({ version, onSwitch }) => {
   return (
     <div className="app-root">
       <motion.div className="progress-bar" style={{ scaleX }} />
-      <Suspense fallback={<div className="canvas-fallback" />}>
-        <SpaceCanvas onNavClick={handleNavClick} targetSection={activeSection} />
-      </Suspense>
+      <SpaceCanvas onNavClick={handleNavClick} targetSection={activeSection} />
       <VirtualGuide activeSection={activeSection} isMuted={isMuted} onToggleMute={() => setIsMuted(m => !m)} />
       <VersionSwitcher version={version} onSwitch={onSwitch} />
       <main className="holo-main">
